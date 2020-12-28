@@ -28,6 +28,7 @@
 #include "gw_lcd.h"
 #include "gw_linker.h"
 #include "githash.h"
+#include "bq24072.h"
 
 #include "odroid_colors.h"
 #include "odroid_overlay.h"
@@ -402,6 +403,8 @@ int main(void)
   if(*ptr == 0x88888888) {
     Error_Handler();
   }
+
+  bq24072_init();
 
   // Launch the emulator
   app_main();
