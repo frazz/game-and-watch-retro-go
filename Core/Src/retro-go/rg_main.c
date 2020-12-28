@@ -11,6 +11,8 @@
 #include "githash.h"
 #include "main.h"
 
+#include "bq24072.h"
+
 #if 0
 #define KEY_SELECTED_TAB  "SelectedTab"
 #define KEY_GUI_THEME     "ColorTheme"
@@ -125,6 +127,7 @@ void retro_loop()
 
     while (true)
     {
+        bq24072_poll();
         if (gui.selected != selected_tab_last)
         {
             int direction = (gui.selected - selected_tab_last) < 0 ? -1 : 1;

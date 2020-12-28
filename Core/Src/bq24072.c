@@ -20,6 +20,9 @@ static const struct {
     [BQ24072_PIN_PGOOD] = { .pin = GPIO_PIN_2, .bank = GPIOA},
 };
 
+volatile bool bq24072_do_poll = false;
+volatile uint32_t bq24072_bat_val = 0;
+
 int32_t bq24072_init(void)
 {
     // PE7 - CHG
@@ -106,5 +109,16 @@ int bq24072_get_charging(void)
     {
         return 0;
     }
+}
+
+void bq24072_poll(void)
+{
+    if (!bq24072_do_poll)
+    {
+        return;
+    }
+
+    bq24072_do_poll = false;
+    bq24072_bat_val++;
 }
 

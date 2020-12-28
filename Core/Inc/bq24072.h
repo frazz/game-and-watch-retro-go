@@ -12,4 +12,6 @@ void bq24072_handle_charging(void);
 int bq24072_get_power_good(void);
 int bq24072_get_charging(void);
 
+void bq24072_poll(void);
+
 #endif // BQ24072_H
