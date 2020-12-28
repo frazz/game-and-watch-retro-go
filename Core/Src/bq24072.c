@@ -23,6 +23,15 @@ static const struct {
 volatile bool bq24072_do_poll = false;
 volatile uint32_t bq24072_bat_val = 0;
 
+extern ADC_HandleTypeDef hadc1;
+
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
+{
+    bq24072_bat_val = HAL_ADC_GetValue(hadc);
+
+    HAL_ADC_Stop_IT(hadc);
+}
+
 int32_t bq24072_init(void)
 {
     // PE7 - CHG
@@ -59,6 +68,8 @@ int32_t bq24072_init(void)
     {
         printf("PGOOD 0: 0\n");
     }
+
+    HAL_ADC_Start_IT(&hadc1);
 
     return 0;
 }
@@ -119,6 +130,7 @@ void bq24072_poll(void)
     }
 
     bq24072_do_poll = false;
-    bq24072_bat_val++;
+
+    HAL_ADC_Start_IT(&hadc1);
 }
 
